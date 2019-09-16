@@ -26,7 +26,7 @@ static void spookyhash_short(const void* message, size_t length,
   // short hash ... it could be used on any message,
   // but it's used by spooky just for short messages.
 
-  uint64_t buf[2 * sc_num_vars];
+  uint64_t buf[24]; // (sc_num_vars * 2)
 
   union {
 
@@ -82,36 +82,47 @@ static void spookyhash_short(const void* message, size_t length,
 
     case 15:
       d += ((uint64_t)u.p8[14]) << 48;
+      // fall-through
     case 14:
       d += ((uint64_t)u.p8[13]) << 40;
+      // fall-through
     case 13:
       d += ((uint64_t)u.p8[12]) << 32;
+      // fall-through
     case 12:
       d += u.p32[2];
       c += u.p64[0];
       break;
     case 11:
       d += ((uint64_t)u.p8[10]) << 16;
+      // fall-through
     case 10:
       d += ((uint64_t)u.p8[9]) << 8;
+      // fall-through
     case 9:
       d += (uint64_t)u.p8[8];
+      // fall-through
     case 8:
       c += u.p64[0];
       break;
     case 7:
       c += ((uint64_t)u.p8[6]) << 48;
+      // fall-through
     case 6:
       c += ((uint64_t)u.p8[5]) << 40;
+      // fall-through
     case 5:
       c += ((uint64_t)u.p8[4]) << 32;
+      // fall-through
     case 4:
       c += u.p32[0];
       break;
     case 3:
       c += ((uint64_t)u.p8[2]) << 16;
+      // fall-through
     case 2:
       c += ((uint64_t)u.p8[1]) << 8;
+      // fall-through
     case 1:
       c += (uint64_t)u.p8[0];
       break;
@@ -137,7 +148,7 @@ void spookyhash128(const void* message, size_t length, uint64_t* hash1,
   }
 
   uint64_t h0, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11;
-  uint64_t buf[sc_num_vars];
+  uint64_t buf[12]; // sc_num_vars
   size_t remainder;
   uint64_t* end;
 

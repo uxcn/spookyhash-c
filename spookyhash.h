@@ -45,8 +45,8 @@ static const uint64_t sc_const = 0xdeadbeefdeadbeef;
 
 struct spooky_state {
 
-  uint64_t data[2 * sc_num_vars]; // unhashed data, for partial messages
-  uint64_t vars[sc_num_vars];     // internal state of the hash
+  uint64_t data[24];              // (sc_num_vars * 2) unhashed data, for partial messages
+  uint64_t vars[12];              // (sc_num_vars) internal state of the hash
   size_t length;                  // total length of the input so far
   uint8_t remainder;              // length of unhashed data stashed in m_data
 };
